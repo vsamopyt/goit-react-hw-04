@@ -1,0 +1,14 @@
+.imageGallery {
+    
+        padding-top: 12px;
+        padding-bottom: 12px;
+        
+    
+    }
+
+.imageGalleryWraper {
+ /* width:100%; */
+    max-width: 370px;
+    padding-inline: 15px;
+    margin-inline: auto;
+    }    

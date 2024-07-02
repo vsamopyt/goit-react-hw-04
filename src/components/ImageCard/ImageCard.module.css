@@ -1,0 +1,13 @@
+
+.imageCardWraper {
+    width:340px;
+    height: 200px;
+}
+
+.imageCardImg {
+    width: 100%;
+    height: 100%;
+    object-fit:content;
+    object-position:bottom;
+    
+}
