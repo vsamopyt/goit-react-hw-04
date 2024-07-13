@@ -1,6 +1,6 @@
 
 .imageCardWraper {
-    width:340px;
+   max-width:340px;
     height: 200px;
 }
 
