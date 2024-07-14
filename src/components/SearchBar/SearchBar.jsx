@@ -4,18 +4,14 @@ import { useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 
 export default function SearchBar({ onInput }) {
-  const [message, setMessage] = useState(false);
+  // const [message, setMessage] = useState(false);
 
   const handleSubmit = event => {
     event.preventDefault();
     const form = event.target;
     if (form.elements.topic.value.trim() === '') {
-      console.log(form.elements.topic.value.trim());
-      console.log(1);
-
-      setMessage(!false);
-      console.log(message);
-      toast('Here is your toast.');
+     
+      toast.error('Please fill the search field.', {duration: 1600});
 
       return;
     } else {
@@ -42,7 +38,7 @@ export default function SearchBar({ onInput }) {
           </button>
         </form>
       </div>
-      {message && <Toaster />}
+      <Toaster />
     </header>
   );
 }

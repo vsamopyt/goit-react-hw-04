@@ -4,7 +4,7 @@ export default function ImageGallery({ array }) {
   return (
     <section className={css.imageGallery}>
       <div className={css.imageGalleryWraper}>
-        <ul>
+        <ul className={css.imageGalleryList}>
           {array.map(item => {
             return (
               <li key={item.id}>
