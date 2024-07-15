@@ -21,7 +21,7 @@ function App() {
   const handleTopic = async newTopic => {
     if (topic === newTopic) {
       toast.error(
-        'You fill the same search request. If you want to see more pictures on your request, click the button Load more or set new search request',
+        'You set the same search request. If you want to see more pictures on your request, click the button "Load more" or set new search request.',
         { duration: 10000 }
       );
       return;
