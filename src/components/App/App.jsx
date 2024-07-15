@@ -34,8 +34,15 @@ function App() {
   // const [totalPage, setTotalPage] =useState(false)
   const [schowBtn, setSchowBtn] =useState(false)
 
+  
   const handleTopic = async (newTopic) => {
+    if (topic === newTopic) {
+      toast.error("You fill the same search request. If you want to see more pictures on your request, click the button Load more or set new search request",{duration: 10000})
+      return
+    }
+   
     setTopic(newTopic);
+
     setlistImages([]);
     setCurrentPage(1)
     // setTotalPage(false)
@@ -84,7 +91,7 @@ useEffect (()=>{
     try {
           setLoading(true);
           setError(false)
-    
+    console.log(topic);
           const response = await fetchImagesByTopic(topic, currentPage);
           console.log(response);
           const data = response.results;
@@ -96,13 +103,13 @@ useEffect (()=>{
           // console.log(response.total_pages);
           // console.log(response.total_pages === currentPage );
           console.log(response.total_pages);
-          console.log(response.page);
-          console.log(response.page);
-          listImages.length
-          if(currentPage >= response.total_pages) {
-
-            console.log(response.page);
-            // setTotalPage(true)
+          console.log(response);
+          console.log(data.length);
+      
+          // if(currentPage >= response.total_pages) {
+            if(currentPage >= response.total_pages) {
+            // console.log(response.page);
+          
             setSchowBtn(true)
             console.log();
             console.log(response.total_pages);
@@ -120,6 +127,9 @@ useEffect (()=>{
             return [...previousData, ...data]
           });
 
+
+       
+
         console.log(data);
 
         } catch (error) {
@@ -130,7 +140,7 @@ useEffect (()=>{
         }
   }
   getImages()
-}, [topic, currentPage ])
+}, [topic, currentPage])
 
 
 

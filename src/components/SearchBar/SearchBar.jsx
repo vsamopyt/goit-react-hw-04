@@ -16,9 +16,11 @@ export default function SearchBar({ onInput }) {
       return;
     } else {
       onInput(form.elements.topic.value);
-      console.log(2);
-      form.reset();
+      
+      console.log(form.elements.topic.value);
+      // form.reset();
     }
+    form.reset();
   };
 
  
