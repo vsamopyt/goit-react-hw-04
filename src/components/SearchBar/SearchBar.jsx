@@ -1,10 +1,8 @@
 import { IoSearchOutline } from 'react-icons/io5';
 import css from './SearchBar.module.css';
-import { useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 
 export default function SearchBar({ onInput }) {
-  // const [message, setMessage] = useState(false);
 
   const handleSubmit = event => {
     event.preventDefault();
@@ -16,9 +14,6 @@ export default function SearchBar({ onInput }) {
       return;
     } else {
       onInput(form.elements.topic.value);
-      
-      console.log(form.elements.topic.value);
-      // form.reset();
     }
     form.reset();
   };

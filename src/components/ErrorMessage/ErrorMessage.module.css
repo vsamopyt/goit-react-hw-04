@@ -1,8 +1,7 @@
 .errorMessageWraper {
-    /* width:100%; */
-       max-width: 370px;
-       padding-inline: 15px;
-       margin-inline: auto;
+    max-width: 370px;
+    padding-inline: 15px;
+    margin-inline: auto;
        } 
 
 .errorMessageText {
