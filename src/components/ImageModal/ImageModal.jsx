@@ -39,6 +39,7 @@ const ImageModal = ({
 
 const modalStyles = {
   content: {
+    height:"100vh",
     top: '50%',
     left: '50%',
     right: 'auto',
