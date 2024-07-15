@@ -1,6 +1,6 @@
 import ImageCard from '../ImageCard/ImageCard';
 import css from "./ImageGallery.module.css"
-export default function ImageGallery({ array }) {
+export default function ImageGallery({ array, onImageClick }) {
   return (
     <section className={css.imageGallery}>
       <div className={css.imageGalleryWraper}>
@@ -8,7 +8,9 @@ export default function ImageGallery({ array }) {
           {array.map(item => {
             return (
               <li key={item.id}>
-                <ImageCard item={item} />
+                <ImageCard item={item}
+                onImageClick ={onImageClick}
+                />
               </li>
             );
           })}

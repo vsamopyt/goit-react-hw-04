@@ -9,6 +9,15 @@ import { fetchImagesByTopic } from '../../images-api';
 import LoadMoreBtn from '../LoadMoreBtn/LoadMoreBtn';
 import toast, { Toaster } from 'react-hot-toast';
 
+import ImageModal from '../ImageModal/ImageModal';
+import ReactDOM from 'react-dom';
+
+
+// import { SiTruenas } from 'react-icons/si';
+// import styled from 'styled-components';
+
+
+
 function App() {
  
 
@@ -22,13 +31,15 @@ function App() {
   const [error, setError] = useState(false);
   const [topic, setTopic] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPage, setTotalPage] =useState(false)
+  // const [totalPage, setTotalPage] =useState(false)
+  const [schowBtn, setSchowBtn] =useState(false)
 
   const handleTopic = async (newTopic) => {
     setTopic(newTopic);
     setlistImages([]);
     setCurrentPage(1)
-    setTotalPage(false)
+    // setTotalPage(false)
+    setSchowBtn(false)
 
   };
 
@@ -37,97 +48,33 @@ function App() {
    
   }
 
-  //   useEffect(() => {
+  //  modal
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState('');
+  const [selectedAlt, setSelectedAlt] = useState('');
+  const [selectedImgLikes, setSelectedImgLikes] = useState('');
+  const [selectedUserName, setSelectedUserName] = useState('');
+  
 
-  //     async function fetchImages() {
-  //       try {
-  //         setLoading(true);
+  const openModal = (image, alt, likes, userName) => {
+    setSelectedImage(image);
+    setIsOpen(true);
 
-  //         const accesKey = 'cZ-MFVyM7oimReB-5_cwTBy1PuN0gxZ0UbQfuk-h5hY';
-  //         const perPage = 5;
-  //         axios.defaults.headers.common[
-  //           'Authorization'
-  //         ] = `Client-ID ${accesKey}`;
-  //         axios.defaults.headers.common['Accept-Version'] = `1`;
+    setSelectedAlt(alt)
+    setSelectedImgLikes(likes)
+    setSelectedUserName(userName)
+  };
 
-  //         const response = await axios.get(
-  //           `https://api.unsplash.com/search/photos`,
-  //           {
-  //             params: {
-  //               query: topic,
-  //               per_page: perPage,
-  //               orientation: 'landscape',
-  //             },
-  //           }
-  //         );
+  const closeModal = () => {
+    setIsOpen(false);
+    setSelectedImage('');
 
-  //         setlistImages(response.data.results);
+    setSelectedAlt("")
+    setSelectedImgLikes("")
+    setSelectedUserName("")
+  };
 
-  //       } catch (error) {
-
-  //         console.log("Error",error);
-  //         setError(true)
-  //       } finally {
-  //         setLoading(false);
-  //       }
-  //     }
-
-  // if ( topic !== "") {
-  //   setlistImages([])
-  //   fetchImages();
-  // }
-  // else {
-  //   return
-  // }
-  //   }, [topic]);
-
-  // VARIANT 2 HTTP request on useEffeect mont. un click
-
-  // useEffect(() => {
-  //   async function fetchImages() {
-  //     try {
-  //       setLoading(true);
-
-  //       const data = await fetchImagesByTopic(topic);
-  //       console.log(data);
-
-  //       setlistImages(data);
-  //     } catch (error) {
-  //       console.log('Error', error);
-  //       setError(true);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   }
-
-  //   if (topic !== '') {
-  //     setlistImages([]);
-  //     fetchImages();
-  //   } else {
-  //     return;
-  //   }
-  // }, [topic]);
-
-  //  Variant 3 move http in search component
-  // const handleTopic = async topic => {
-  //   try {
-  //     setLoading(true);
-  //     setlistImages([]);
-  //     setError(false)
-
-  //     const data = await fetchImagesByTopic(topic);
-  //     console.log(data);
-
-  //     setlistImages(data);
-  //   } catch (error) {
-     
-  //     setError(true);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-
-    // setTopic(value);
-  // };
+  
 
 useEffect (()=>{
   if(topic === "") {
@@ -145,13 +92,20 @@ useEffect (()=>{
 
 
         // if(currentPage === response.total_pages) {
-          console.log(currentPage);
+          // console.log(currentPage);
+          // console.log(response.total_pages);
+          // console.log(response.total_pages === currentPage );
           console.log(response.total_pages);
-          console.log(response.total_pages === currentPage );
-          if(currentPage === response.total_pages) {
-            console.log("aaaaaa");
-            setTotalPage(true)
-            console.log(totalPage);
+          console.log(response.page);
+          console.log(response.page);
+          listImages.length
+          if(currentPage >= response.total_pages) {
+
+            console.log(response.page);
+            // setTotalPage(true)
+            setSchowBtn(true)
+            console.log();
+            console.log(response.total_pages);
             toast.success("There are no more pictures for this request", {duration: 1600})
           }
         //   setTotalPage(true)
@@ -176,7 +130,7 @@ useEffect (()=>{
         }
   }
   getImages()
-}, [topic, currentPage])
+}, [topic, currentPage ])
 
 
 
@@ -185,16 +139,11 @@ useEffect (()=>{
   return (
     <div className={css.appWraper}>
       <SearchBar onInput={handleTopic} />
-      {/* {loading && (
-        <div className={css.barLoader}>
-          {' '}
-          <BarLoader />
-        </div>
-      )} */}
+    
 
       {error && <ErrorMessage />}
 
-      {listImages.length > 0 && <ImageGallery array={listImages} />}
+      {listImages.length > 0 && <ImageGallery array={listImages} onImageClick ={openModal} />}
       {loading && (
         <div className={css.barLoader}>
           {' '}
@@ -203,7 +152,17 @@ useEffect (()=>{
       )}
 
 {/* <button onClick = {handleLoadMore}>Load more</button> */}
-{listImages.length > 0 && !loading  && !totalPage && <LoadMoreBtn onHandle = {handleLoadMore}/>}
+{listImages.length > 0 && !loading  && !schowBtn && <LoadMoreBtn onHandle = {handleLoadMore}/>}
+
+<ImageModal 
+        isOpen={isOpen}
+        onRequestClose={closeModal} 
+        imageUrl={selectedImage}
+        alt = {selectedAlt}
+        likes = {selectedImgLikes}
+        userName= {selectedUserName}
+      />
+
 <Toaster/>
     </div>
   );

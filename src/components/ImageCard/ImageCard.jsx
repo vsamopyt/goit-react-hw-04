@@ -1,11 +1,11 @@
 import css from "./ImageCard.module.css"
-export default function ImageCard({ item }) {
-  const { urls, alt_description } = item;
+export default function ImageCard({ item, onImageClick }) {
+  const { urls, alt_description, likes, user } = item;
   return (
     <div className={css.imageCardWraper}>
-      <a href={urls.regular}>
-        <img className ={css.imageCardImg} src={urls.small} alt={alt_description} target="_blank" rel="noreferrer noopener"/>
-      </a>
+      
+        <img className ={css.imageCardImg} src={urls.regular} alt={alt_description} data-likes ={likes} data-name = {user.name} target="_blank" rel="noreferrer noopener" onClick={() => onImageClick(urls.regular,alt_description,likes,user.name )}/>
+      
     </div>
   );
 }
