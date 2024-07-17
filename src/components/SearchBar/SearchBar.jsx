@@ -10,12 +10,12 @@ export default function SearchBar({ onInput }) {
     if (form.elements.topic.value.trim() === '') {
      
       toast.error('Please fill the search field.', {duration: 1600});
-
+      form.reset();
       return;
     } else {
       onInput(form.elements.topic.value);
     }
-    form.reset();
+    // form.reset();
   };
 
  
